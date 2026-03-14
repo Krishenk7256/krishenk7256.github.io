@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max Glen · interactive portfolio</title>
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e1e2f;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      z-index: 100;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      font-weight: 500;
+    }
+    .nav-links a {
+      position: relative;
+      color: inherit;
+      text-decoration: none;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      transition: 0.3s;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    /* Hero */
+    .hero {
+      padding: 100px 0 60px;
+      display: flex;
+      align-items: center;
+      min-height: 80vh;
+    }
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    .hero-text {
+      flex: 1 1 400px;
+    }
+    .hero-text .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2563eb;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 span {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #4b5563;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 40px;
+      font-weight: 600;
+      background: white;
+      border: 1px solid rgba(37,99,235,0.2);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.1);
+      transition: 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      border: none;
+      box-shadow: 0 10px 25px rgba(37,99,235,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(37,99,235,0.5);
+    }
+    .hero-image {
+      flex: 1 1 300px;
+      display: flex;
+      justify-content: center;
+    }
+    .profile-pic {
+      width: 320px;
+      height: 320px;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 120px;
+      box-shadow: 0 30px 40px rgba(37,99,235,0.3);
+      animation: morph 8s ease-in-out infinite;
+    }
+    @keyframes morph {
+      0%,100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      50% { border-radius: 60% 40% 40% 60% / 50% 60% 40% 50%; }
+    }
+    /* Section titles */
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 60px 0 40px;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Skills */
+    .skills {
+      padding: 40px 0 60px;
+      background: white;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .skill-card {
+      background: #f8fafc;
+      padding: 30px 20px;
+      border-radius: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+      transition: 0.3s;
+      border: 1px solid rgba(37,99,235,0.1);
+    }
+    .skill-card:hover {
+      transform: translateY(-8px);
+      border-color: #2563eb;
+      box-shadow: 0 20px 40px rgba(37,99,235,0.1);
+    }
+    .skill-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #2563eb;
+    }
+    .skill-card h3 {
+      font-weight: 600;
+    }
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+    .project-card {
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+      padding: 24px;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 25px 40px rgba(37,99,235,0.15);
+    }
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .project-header i {
+      font-size: 32px;
+      color: #2563eb;
+    }
+    .project-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .project-demo {
+      background: #f3f6fc;
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 20px;
+      min-height: 220px;
+    }
+    /* Стили для интерактивных демо */
+    .demo-dashboard .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .demo-dashboard .stat {
+      background: white;
+      border-radius: 16px;
+      padding: 10px;
+      text-align: center;
+      flex: 1;
+      margin: 0 4px;
+    }
+    .demo-dashboard .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      height: 100px;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .demo-dashboard .bar {
+      flex: 1;
+      background: linear-gradient(180deg, #2563eb, #7c3aed);
+      border-radius: 8px 8px 4px 4px;
+      transition: height 0.2s;
+    }
+    .demo-todo .todo-list {
+      list-style: none;
+    }
+    .demo-todo .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .demo-todo .todo-check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #2563eb;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .demo-todo .todo-check.checked {
+      background: #2563eb;
+      position: relative;
+    }
+    .demo-todo .todo-check.checked::after {
+      content: "✓";
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .demo-todo .todo-text {
+      flex: 1;
+    }
+    .demo-todo .todo-text.done {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+    .demo-ecommerce .products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .demo-ecommerce .product {
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+    }
+    .demo-ecommerce .product .price {
+      font-weight: 700;
+      margin: 8px 0;
+    }
+    .demo-ecommerce .cart-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .demo-api .api-response {
+      background: #1e1e2f;
+      color: #a7f3d0;
+      padding: 16px;
+      border-radius: 16px;
+      font-family: monospace;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    .btn-small {
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-small:hover {
+      background: #1d4ed8;
+    }
+    .footer-note {
+      margin-top: 16px;
+      color: #9ca3af;
+      font-size: 12px;
+      text-align: right;
+    }
+    /* Contact */
+    .contact {
+      background: white;
+      padding: 60px 0;
+      margin-top: 40px;
+    }
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .contact-link i {
+      font-size: 40px;
+      color: #2563eb;
+      transition: 0.2s;
+    }
+    .contact-link:hover i {
+      transform: scale(1.1);
+      color: #7c3aed;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      color: #6b7280;
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 16px 0;
+      }
+      .nav-links {
+        gap: 20px;
+        margin-top: 12px;
+      }
+      .hero-content {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container navbar">
+      <div class="logo">Max Glen</div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="greeting">👋 Hey, I'm Max Glen</div>
+          <h1>Frontend <span>Developer</span> & UI Enthusiast</h1>
+          <p>I craft beautiful, fast, and interactive web experiences using React, Node.js, Tailwind, and Python.</p>
+          <a href="#projects" class="btn btn-primary">See interactive demos</a>
+        </div>
+        <div class="hero-image">
+          <div class="profile-pic">
+            <i class="fas fa-code"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2 class="section-title">My <span>Toolbox</span></h2>
+        <div class="skills-grid">
+          <div class="skill-card"><i class="fab fa-react skill-icon"></i><h3>React</h3></div>
+          <div class="skill-card"><i class="fab fa-node-js skill-icon"></i><h3>Node.js</h3></div>
+          <div class="skill-card"><i class="fas fa-wind skill-icon"></i><h3>Tailwind CSS</h3></div>
+          <div class="skill-card"><i class="fab fa-js skill-icon"></i><h3>Vanilla JS</h3></div>
+          <div class="skill-card"><i class="fab fa-python skill-icon"></i><h3>Python</h3></div>
+          <div class="skill-card"><i class="fas fa-bolt skill-icon"></i><h3>FastAPI</h3></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive projects -->
+    <section id="projects" class="container">
+      <h2 class="section-title">Live <span>demos</span></h2>
+      <div class="projects-grid">
+        <!-- 1. Dashboard -->
+        <div class="project-card">
+          <div class="project-header">
+            <i class="fas fa-chart-line"></i>
+            <h3>Analytics Dashboard</h3>
+          </div>
+          <div class="project-demo demo-dashboard" id="demo-dashboard">
+            <div class="stats">
+              <div class="stat"><span id="visitors">24.5K</span><br><small>visitors</small></div>
+              <div class="stat"><span id="revenue">$8,120</span><br><small>revenue</small></div>
+              <div class="stat"><span id="conversion">3.2%</span><br><small>conv.</small></div>
+            </div>
+            <div class="bar-chart" id="barChart">
+              <!-- bars generated via js -->
+            </div>
+            <button class="btn-small" id="refreshDashboard">⟳ refresh data</button>
+            <div class="footer-note">React · Recharts (simulated)</div>
+          </div>
+        </div>
+        <!-- 2. Task Manager -->
+        <div class="project-card">
+          <div class="project-header">
+            <i class="fas fa-tasks"></i>
+            <h3>Task Manager</h3>
+          </div>
+          <div class="project-demo demo-todo" id="demo-todo">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+              <input type="text" id="newTaskInput" placeholder="New task..." style="flex:1; padding:10px; border-radius:30px; border:1px solid #ccc;">
+              <button class="btn-small" id="addTaskBtn">Add</button>
+            </div>
+            <ul class="todo-list" id="todoList">
+              <li class="todo-item"><span class="todo-check checked"></span><span class="todo-text done">Design homepage</span></li>
+              <li class="todo-item"><span class="todo-check"></span><span class="todo-text">Prepare presentation</span></li>
+              <li class="todo-item"><span class="todo-check"></span><span class="todo-text">Call client</span></li>
+            </ul>
+            <div class="footer-note">Vanilla JS · local storage (simulated)</div>
+          </div>
+        </div>
+        <!-- 3. E-commerce UI -->
+        <div class="project-card">
+          <div class="project-header">
+            <i class="fas fa-store"></i>
+            <h3>E‑commerce UI</h3>
+          </div>
+          <div class="project-demo demo-ecommerce" id="demo-ecommerce">
+            <div class="products">
+              <div class="product">
+                <div>📱 Phone</div>
+                <div class="price">$699</div>
+                <button class="btn-small add-to-cart" data-name="Phone" data-price="699">Add</button>
+              </div>
+              <div class="product">
+                <div>💻 Laptop</div>
+                <div class="price">$1299</div>
+                <button class="btn-small add-to-cart" data-name="Laptop" data-price="1299">Add</button>
+              </div>
+              <div class="product">
+                <div>🎧 Headphones</div>
+                <div class="price">$199</div>
+                <button class="btn-small add-to-cart" data-name="Headphones" data-price="199">Add</button>
+              </div>
+              <div class="product">
+                <div>⌚ Watch</div>
+                <div class="price">$249</div>
+                <button class="btn-small add-to-cart" data-name="Watch" data-price="249">Add</button>
+              </div>
+            </div>
+            <div class="cart-info">
+              <span>🛒 <span id="cartCount">0</span> items</span>
+              <span>Total: $<span id="cartTotal">0</span></span>
+            </div>
+            <div class="footer-note">React · useContext (simulated)</div>
+          </div>
+        </div>
+        <!-- 4. API Boilerplate -->
+        <div class="project-card">
+          <div class="project-header">
+            <i class="fas fa-robot"></i>
+            <h3>API Boilerplate</h3>
+          </div>
+          <div class="project-demo demo-api" id="demo-api">
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+              <button class="btn-small" id="callApiBtn">GET /api/users</button>
+            </div>
+            <div class="api-response" id="apiResponse">
+              { "message": "Click button to fetch" }
+            </div>
+            <div class="footer-note">FastAPI · JWT · SQLAlchemy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="container contact-content">
+        <h2 class="section-title">Let's <span>connect</span></h2>
+        <p style="margin-bottom: 20px;">I'm open to freelance opportunities and interesting projects.</p>
+        <div class="contact-links">
+          <a href="mailto:maksim7256@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
+          <a href="https://t.me/bfmk6" class="contact-link"><i class="fab fa-telegram"></i><span>Telegram</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Max Glen. Crafted with <i class="fas fa-heart" style="color:#2563eb;"></i> and interactivity.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // ----- Dashboard demo (имитация данных) -----
+      const visitorsSpan = document.getElementById('visitors');
+      const revenueSpan = document.getElementById('revenue');
+      const conversionSpan = document.getElementById('conversion');
+      const barChart = document.getElementById('barChart');
+      const refreshBtn = document.getElementById('refreshDashboard');
+
+      function randomData() {
+        const visitors = (Math.random() * 30 + 10).toFixed(1) + 'K';
+        const revenue = '$' + (Math.random() * 10 + 3).toFixed(0) + 'K';
+        const conversion = (Math.random() * 5 + 1).toFixed(1) + '%';
+        visitorsSpan.textContent = visitors;
+        revenueSpan.textContent = revenue;
+        conversionSpan.textContent = conversion;
+        // bars
+        const barsHtml = [];
+        for (let i = 0; i < 7; i++) {
+          const height = Math.floor(Math.random() * 80 + 30);
+          barsHtml.push(`<div class="bar" style="height:${height}px;"></div>`);
+        }
+        barChart.innerHTML = barsHtml.join('');
+      }
+      if (refreshBtn) refreshBtn.addEventListener('click', randomData);
+      randomData(); // initial
+
+      // ----- Todo demo (интерактивный) -----
+      const todoList = document.getElementById('todoList');
+      const addBtn = document.getElementById('addTaskBtn');
+      const newTaskInput = document.getElementById('newTaskInput');
+
+      function updateTodoListeners() {
+        document.querySelectorAll('.todo-check').forEach(check => {
+          check.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('checked');
+            const textSpan = this.nextElementSibling;
+            if (textSpan && textSpan.classList.contains('todo-text')) {
+              textSpan.classList.toggle('done');
+            }
+          });
+        });
+      }
+
+      function addTask(text) {
+        if (!text.trim()) return;
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.innerHTML = `<span class="todo-check"></span><span class="todo-text">${text}</span>`;
+        todoList.appendChild(li);
+        updateTodoListeners();
+      }
+
+      if (addBtn) {
+        addBtn.addEventListener('click', function() {
+          addTask(newTaskInput.value);
+          newTaskInput.value = '';
+        });
+      }
+      newTaskInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') addTask(this.value);
+      });
+      updateTodoListeners();
+
+      // ----- E-commerce demo (корзина) -----
+      let cart = [];
+      const cartCountSpan = document.getElementById('cartCount');
+      const cartTotalSpan = document.getElementById('cartTotal');
+
+      function updateCart() {
+        const count = cart.reduce((acc, item) => acc + item.qty, 0);
+        const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+        cartCountSpan.textContent = count;
+        cartTotalSpan.textContent = total;
+      }
+
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const name = this.dataset.name;
+          const price = parseInt(this.dataset.price);
+          const existing = cart.find(item => item.name === name);
+          if (existing) existing.qty++;
+          else cart.push({ name, price, qty: 1 });
+          updateCart();
+        });
+      });
+
+      // ----- API demo (имитация запроса) -----
+      const apiBtn = document.getElementById('callApiBtn');
+      const apiResponse = document.getElementById('apiResponse');
+      if (apiBtn) {
+        apiBtn.addEventListener('click', function() {
+          apiResponse.textContent = 'Loading...';
+          setTimeout(() => {
+            const mockData = {
+              users: [
+                { id: 1, name: 'John Doe', email: 'john@example.com' },
+                { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+              ],
+              total: 2
+            };
+            apiResponse.textContent = JSON.stringify(mockData, null, 2);
+          }, 500);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
